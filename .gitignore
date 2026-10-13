@@ -1,0 +1,13 @@
+# File rahasia
+.env
+.env.local
+*.key
+
+# Dependensi dan hasil build
+node_modules/
+dist/
+.vercel/
+
+# File sistem
+.DS_Store
+Thumbs.db

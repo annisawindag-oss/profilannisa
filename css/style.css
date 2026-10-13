@@ -1,0 +1,296 @@
+/* ==========================================================
+   Profil Annisa Winda Gustina
+   Tema: papan sirkuit (PCB) dengan jalur tembaga di atas
+   solder mask hijau tua dan teks silkscreen putih.
+   ========================================================== */
+
+:root {
+  --mask: #123A2C;       /* latar utama (solder mask) */
+  --mask-2: #1A4B38;     /* panel yang sedikit lebih terang */
+  --line: #2F6A52;       /* garis tipis pemisah */
+  --silk: #F4F1E7;       /* teks utama (silkscreen) */
+  --silk-dim: #BCCFC4;   /* teks sekunder */
+  --copper: #D9934A;     /* jalur tembaga */
+  --glow: #FFC27A;       /* LED menyala */
+
+  --font-display: "Chakra Petch", "Segoe UI", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --wrap: 1100px;
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 4.5rem;
+}
+
+body {
+  margin: 0;
+  background-color: var(--mask);
+  /* titik halus seperti lubang pada papan perfboard */
+  background-image: radial-gradient(rgba(244, 241, 231, 0.09) 1px, transparent 1.4px);
+  background-size: 26px 26px;
+  color: var(--silk);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap {
+  width: min(100% - 2.5rem, var(--wrap));
+  margin-inline: auto;
+}
+
+a { color: inherit; }
+
+:focus-visible {
+  outline: 2px solid var(--glow);
+  outline-offset: 3px;
+}
+
+.skip {
+  position: absolute;
+  left: -999px;
+  top: 0;
+}
+.skip:focus {
+  left: 1rem;
+  top: 1rem;
+  z-index: 10;
+  padding: 0.5rem 1rem;
+  background: var(--silk);
+  color: var(--mask);
+  border-radius: 4px;
+}
+
+/* ---------- Navigasi ---------- */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: rgba(18, 58, 44, 0.92);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--line);
+}
+.nav .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 3.5rem;
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+}
+.brand svg { width: 22px; height: 22px; }
+
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.nav-links a {
+  display: inline-block;
+  padding: 0.35rem 0;
+  text-decoration: none;
+  color: var(--silk-dim);
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+}
+.nav-links a:hover { color: var(--silk); }
+.nav-links a[aria-current="true"] {
+  color: var(--silk);
+  border-bottom-color: var(--copper);
+}
+
+/* ---------- Hero ---------- */
+.hero {
+  padding: clamp(3rem, 10vh, 6rem) 0 clamp(2.5rem, 8vh, 5rem);
+}
+.hero h1 {
+  margin: 0 0 1.25rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.75rem, 9.5vw, 6.25rem);
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+}
+.hero h1 span { display: block; }
+
+.lead {
+  max-width: 36rem;
+  margin: 0;
+  font-size: clamp(1.1rem, 2.2vw, 1.35rem);
+  color: var(--silk-dim);
+}
+
+.trace { margin-top: clamp(2rem, 6vh, 3.5rem); }
+.trace svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.trace-dim {
+  fill: none;
+  stroke: var(--line);
+  stroke-width: 5;
+  stroke-linejoin: round;
+}
+.via { fill: var(--mask); stroke: var(--line); stroke-width: 4; }
+.pad { fill: var(--copper); }
+
+.trace-main {
+  fill: none;
+  stroke: var(--copper);
+  stroke-width: 6;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw 1.6s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
+}
+.led-ring { fill: none; stroke: var(--copper); stroke-width: 6; }
+.led {
+  fill: var(--glow);
+  opacity: 0.18;
+  animation: light 0.6s ease-out 1.9s forwards;
+}
+.led-halo {
+  fill: var(--glow);
+  opacity: 0;
+  animation: halo 0.9s ease-out 1.9s forwards;
+}
+
+@keyframes draw  { to { stroke-dashoffset: 0; } }
+@keyframes light { to { opacity: 1; } }
+@keyframes halo  { to { opacity: 0.45; } }
+
+/* ---------- Bagian umum ---------- */
+.section {
+  padding: clamp(3.5rem, 9vw, 6rem) 0;
+  border-top: 1px solid var(--line);
+}
+.section h2 {
+  margin: 0 0 0.75rem;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  line-height: 1.1;
+}
+.muted {
+  margin: 0;
+  max-width: 28rem;
+  color: var(--silk-dim);
+}
+
+.split {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem 4rem;
+}
+@media (min-width: 800px) {
+  .split { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+}
+
+/* ---------- Lembar data (profil) ---------- */
+.spec { margin: 0; }
+.spec .row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.15rem;
+  padding: 1rem 0;
+  border-top: 1px solid var(--line);
+}
+.spec .row:last-child { border-bottom: 1px solid var(--line); }
+@media (min-width: 560px) {
+  .spec .row {
+    grid-template-columns: 10rem 1fr;
+    gap: 1.5rem;
+    align-items: baseline;
+  }
+}
+.spec dt {
+  color: var(--silk-dim);
+  font-size: 0.95rem;
+}
+.spec dd {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+.spec .sub {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--silk-dim);
+}
+
+/* ---------- Keahlian ---------- */
+.skills {
+  margin: 1.75rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.skills li {
+  padding-left: 1rem;
+  border-left: 4px solid var(--copper);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(2rem, 6vw, 3.25rem);
+  line-height: 1.1;
+}
+.skills li + li { margin-top: 1rem; }
+
+.board {
+  padding: 1.25rem;
+  background: var(--mask-2);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+.board svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.ref {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 500;
+  fill: var(--silk-dim);
+}
+
+/* ---------- Footer ---------- */
+.footer {
+  padding: 2rem 0;
+  border-top: 1px solid var(--line);
+  color: var(--silk-dim);
+  font-size: 0.95rem;
+}
+.footer .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem 2rem;
+}
+
+/* ---------- Gerak dikurangi ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .trace-main { animation: none; stroke-dashoffset: 0; }
+  .led { animation: none; opacity: 1; }
+  .led-halo { animation: none; opacity: 0.45; }
+}
