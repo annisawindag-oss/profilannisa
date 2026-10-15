@@ -136,7 +136,43 @@ a { color: inherit; }
   color: var(--silk-dim);
 }
 
-.trace { margin-top: clamp(2rem, 6vh, 3.5rem); }
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2rem 3rem;
+}
+.hero-text { min-width: 0; }
+
+/* Foto dalam bingkai tembaga */
+.portrait {
+  margin: 0;
+  width: min(100%, 22rem);
+  padding: 0.5rem;
+  background: var(--mask-2);
+  border: 2px solid var(--copper);
+  border-radius: 6px;
+}
+.portrait img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: 50% 45%;
+  border-radius: 2px;
+}
+
+@media (min-width: 900px) {
+  .hero-grid {
+    grid-template-columns: minmax(0, 1fr) clamp(15rem, 28vw, 21rem);
+    align-items: center;
+  }
+  .hero h1 { font-size: clamp(3rem, 8vw, 5.75rem); }
+  .portrait { width: 100%; }
+  .trace { grid-column: 1 / -1; }
+}
+
+.trace { margin-top: clamp(0rem, 2vh, 1rem); }
 .trace svg {
   display: block;
   width: 100%;

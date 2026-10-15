@@ -9,6 +9,7 @@ profil-annisa/
 ├── index.html          halaman utama (isi teks diubah di sini)
 ├── css/style.css       tampilan dan warna
 ├── js/main.js          tahun otomatis dan penanda menu
+├── assets/foto.jpg     foto profil di bagian atas halaman
 ├── assets/favicon.svg  ikon tab browser
 ├── .gitignore          daftar file yang tidak ikut ke GitHub
 └── README.md           panduan ini
@@ -31,6 +32,7 @@ Folder ini proyek terpisah. Jangan digabung dengan folder `C:\kelolakeuangan`.
 |---|---|---|
 | Nama, status, pendidikan, domisili | `index.html` | bagian `<dl class="spec">` |
 | Keahlian | `index.html` | bagian `<ul class="skills">`, tambah baris `<li>` |
+| Foto | `assets/foto.jpg` | timpa dengan foto baru, nama file tetap `foto.jpg` |
 | Warna | `css/style.css` | blok `:root` paling atas |
 
 ## 3. Menambah kontak
